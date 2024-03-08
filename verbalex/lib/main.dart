@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:verbalex/screen/home_screen.dart';
 
 void main() {
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
           backgroundColor: Colors.white,
-          fontFamily: "Lato"),
+          fontFamily: GoogleFonts.lato().fontFamily
+      ),
       home: const HomeScreen(),
     );
   }
