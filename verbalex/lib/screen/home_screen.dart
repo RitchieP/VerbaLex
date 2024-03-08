@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verbalex/widgets/output_space.dart';
 import 'package:verbalex/widgets/upper_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,8 +14,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UpperNavBar(),
-      body: const Center(
-        child: Text('Welcome to VerbaLex'),
+      body: Center(
+        child: Column(
+          children: [
+            OutputSpace()
+          ],
+        )
       ),
     );
   }
