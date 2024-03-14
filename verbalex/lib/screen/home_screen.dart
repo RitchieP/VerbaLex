@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verbalex/widgets/output_space.dart';
+import 'package:verbalex/widgets/text_button.dart';
 import 'package:verbalex/widgets/upper_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,11 +14,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UpperNavBar(),
+      appBar: const UpperNavBar(),
       body: Center(
         child: Column(
-          children: [
-            OutputSpace()
+          children: const [
+            OutputSpace(),
+            CustomTextButton(title: "Record", onPressedTitle: "Recording",)
           ],
         )
       ),

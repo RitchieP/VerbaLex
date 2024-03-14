@@ -24,9 +24,10 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.blue,
+          primaryColor: const Color.fromARGB(255, 13, 71, 161),
+          focusColor: const Color.fromARGB(255, 239, 83, 80),
           backgroundColor: Colors.white,
-          fontFamily: GoogleFonts.lato().fontFamily
+          fontFamily: GoogleFonts.lato().fontFamily,
       ),
       home: const HomeScreen(),
     );
