@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const UpperNavBar(),
+      appBar: const UpperNavBar(screen: "homepage",),
       body: Center(
         child: Column(
           children: const [
