@@ -54,7 +54,7 @@ class VerbaLexVoiceDataset(datasets.GeneratorBasedBuilder):
         for accent, accent_stats in STATS["accents"].items()
     ]
 
-    DEFAULT_CONFIG_NAME = "all"
+    DEFAULT_CONFIG_NAME = "ar"
 
     def _info(self):
         return datasets.DatasetInfo(
