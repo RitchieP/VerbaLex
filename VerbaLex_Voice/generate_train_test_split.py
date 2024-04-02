@@ -71,14 +71,26 @@ if __name__ == "__main__":
 
     try:
         for accent, speakers in accent_speaker_map.items():
+            # Open the .tar file for training audio files
             train_audio_tar_file = tarfile.open(
                 f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\audio\\{accent}\\train\\{accent}_train.tar",
                 "w"
             )
+            # Write the column names into the training .tsv file
+            with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\transcript\\{accent}\\train.tsv", 'a') as train_tsv_file:
+                train_tsv_file.write("path\tsentence\n")
+            train_tsv_file.close()
+
+            # Open the .tar file for testing audio files
             test_audio_tar_file = tarfile.open(
                 f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\audio\\{accent}\\test\\{accent}_test.tar",
                 "w"
             )
+            # Write the column names into the testing .tsv file
+            with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\transcript\\{accent}\\test.tsv", 'a') as test_tsv_file:
+                test_tsv_file.write("path\tsentence\n")
+            test_tsv_file.close()
+
             # This for loop is to add all the wav file of different speakers with the same accent into a tar file
             for speaker in speakers:
                 print(f"Splitting data for speaker {speaker} of accent {accent}")
@@ -90,26 +102,26 @@ if __name__ == "__main__":
                     # Copy training audio into a tar file
                     train_audio_tar_file.add(
                         f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\l2arctic_release_v5.0\\{speaker}\\{speaker}\\wav\\arctic_{id}.wav",
-                        arcname=f"{speaker}_arctic_{id}.wav"
+                        arcname=f"{accent}_train\\{speaker}_arctic_{id}.wav"
                     )
 
                     # Copy training transcript into a tsv file
                     with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\transcript\\{accent}\\train.tsv", 'a') as train_tsv_file:
                         with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\l2arctic_release_v5.0\\{speaker}\\{speaker}\\transcript\\arctic_{id}.txt") as txt_file:
-                            train_tsv_file.write(txt_file.read() + "\n")
+                            train_tsv_file.write(f"{speaker}_arctic_{id}.wav\t" + txt_file.read() + "\n")
                     train_tsv_file.close()
 
                 # Copy testing audio into tar file
                 for id in test:
                     test_audio_tar_file.add(
                         f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\l2arctic_release_v5.0\\{speaker}\\{speaker}\\wav\\arctic_{id}.wav",
-                        arcname=f"{speaker}_arctic_{id}.wav"
+                        arcname=f"{accent}_test\\{speaker}_arctic_{id}.wav"
                     )
 
                     # Copy testing transcript into tsv file
                     with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\data\\transcript\\{accent}\\test.tsv", 'a') as test_tsv_file:
                         with open(f"C:\\Users\\user\\OneDrive - Universiti Sains Malaysia\\Assignment\\FYP\\l2arctic_release_v5.0\\{speaker}\\{speaker}\\transcript\\arctic_{id}.txt") as txt_file:
-                            test_tsv_file.write(txt_file.read() + "\n")
+                            test_tsv_file.write(f"{speaker}_arctic_{id}.wav\t" + txt_file.read() + "\n")
                     test_tsv_file.close()
             # Close both the tar file after all the .wav files of speakers of an accent has been added.
             test_audio_tar_file.close()

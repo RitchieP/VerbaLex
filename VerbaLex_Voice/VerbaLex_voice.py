@@ -4,14 +4,14 @@ import os
 import datasets
 from tqdm import tqdm
 
-from VerbaLex_Voice.accents import ACCENTS
-from VerbaLex_Voice.release_stats import STATS
+from .accents import ACCENTS
+from .release_stats import STATS
 
 _HOMEPAGE = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice"
 
 _LICENSE = "https://choosealicense.com/licenses/apache-2.0/"
 
-_BASE_URL = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice/tree/main"
+_BASE_URL = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice/resolve/main/"
 
 _AUDIO_URL = _BASE_URL + "audio/{accent}/{split}/{accent}_{split}.tar"
 
@@ -25,7 +25,7 @@ class VerbaLexVoiceConfig(datasets.BuilderConfig):
     def __init__(self, name, version, **kwargs):
         self.accent = kwargs.pop("accent", None)
         self.num_speakers = kwargs.pop("num_speakers", None)
-        self.num_files = kwargs.pop("num_clips", None)
+        self.num_files = kwargs.pop("num_files", None)
         description = (
             f"VerbaLex Voice english speech-to-text dataset in {self.accent} accent."
         )
