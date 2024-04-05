@@ -4,14 +4,14 @@ import os
 import datasets
 from tqdm import tqdm
 
-from VerbaLex_Voice.accents import ACCENTS
-from VerbaLex_Voice.release_stats import STATS
+from .accents import ACCENTS
+from .release_stats import STATS
 
 _HOMEPAGE = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice"
 
 _LICENSE = "https://choosealicense.com/licenses/apache-2.0/"
 
-_BASE_URL = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice/tree/main"
+_BASE_URL = "https://huggingface.co/datasets/RitchieP/VerbaLex_voice/resolve/main/"
 
 _AUDIO_URL = _BASE_URL + "audio/{accent}/{split}/{accent}_{split}.tar"
 
@@ -25,7 +25,7 @@ class VerbaLexVoiceConfig(datasets.BuilderConfig):
     def __init__(self, name, version, **kwargs):
         self.accent = kwargs.pop("accent", None)
         self.num_speakers = kwargs.pop("num_speakers", None)
-        self.num_files = kwargs.pop("num_clips", None)
+        self.num_files = kwargs.pop("num_files", None)
         description = (
             f"VerbaLex Voice english speech-to-text dataset in {self.accent} accent."
         )
@@ -54,7 +54,7 @@ class VerbaLexVoiceDataset(datasets.GeneratorBasedBuilder):
         for accent, accent_stats in STATS["accents"].items()
     ]
 
-    DEFAULT_CONFIG_NAME = "ar"
+    DEFAULT_CONFIG_NAME = "all"
 
     def _info(self):
         return datasets.DatasetInfo(
@@ -65,7 +65,6 @@ class VerbaLexVoiceDataset(datasets.GeneratorBasedBuilder):
             features=datasets.Features(
                 {
                     "path": datasets.Value("string"),
-                    "accent": datasets.Value("string"),
                     "sentence": datasets.Value("string"),
                     "audio": datasets.Audio(sampling_rate=44_100)
                 }
@@ -96,12 +95,18 @@ class VerbaLexVoiceDataset(datasets.GeneratorBasedBuilder):
         }
         split_generators = []
         for split in splits:
+            split_local_extract_archive_paths = local_extracted_archive_paths.get(split)
+            if not isinstance(split_local_extract_archive_paths, list):
+                split_local_extract_archive_paths = [split_local_extract_archive_paths]
+            split_archives = archive_paths.get(split)
+            if not isinstance(split_archives, list):
+                split_archives = [split_archives]
             split_generators.append(
                 datasets.SplitGenerator(
                     name=split_names.get(split, split),
                     gen_kwargs={
-                        "local_extracted_archive_paths": local_extracted_archive_paths.get(split),
-                        "archives": [dl_manager.iter_archive(path) for path in archive_paths.get(split)],
+                        "local_extracted_archive_paths": split_local_extract_archive_paths,
+                        "archives": [dl_manager.iter_archive(path) for path in split_archives],
                         "meta_path": meta_paths[split]
                     }
                 )
