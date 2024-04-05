@@ -1,4 +1,5 @@
 ACCENTS = {
     "ar": "arabic",
-    "zh": "chinese"
+    "zh": "chinese",
+    "hi": "hindi"
 }
