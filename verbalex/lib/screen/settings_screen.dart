@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:verbalex/widgets/ListTileStyles.dart';
+import 'package:verbalex/widgets/list_tile_styles.dart';
 import 'package:verbalex/widgets/upper_nav_bar.dart';
+
+import 'accent_selection.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -27,7 +29,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             listTileOptions(
               "Accent choice", 
               "Switch it to have the intelligent model best fit for you.", 
-              false
+              false,
+              onPressedFunction: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AccentSelection(),
+                )
+              )
             ),
             const SizedBox(height: 20,),
             listTileTitle("Help"),
