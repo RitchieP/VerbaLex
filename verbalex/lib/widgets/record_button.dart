@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CustomTextButton extends StatefulWidget {
-  const CustomTextButton({super.key, required this.title, this.onPressedTitle});
+class RecordButton extends StatefulWidget {
+  const RecordButton({super.key, required this.title, this.onPressedTitle});
 
   final String title;
   final String? onPressedTitle;
 
   @override
-  State<CustomTextButton> createState() => _CustomTextButtonState();
+  State<RecordButton> createState() => _RecordButtonState();
 }
 
-class _CustomTextButtonState extends State<CustomTextButton> {
+class _RecordButtonState extends State<RecordButton> {
   late Color onPressedColor;
   late Color onReleasedColor;
   late bool isPressed;
@@ -39,8 +39,7 @@ class _CustomTextButtonState extends State<CustomTextButton> {
       onPointerDown: (event) => setState(() => isPressed = true),
       onPointerUp: (event) => setState(() => isPressed = false),
       child: TextButton(
-          onPressed: () {
-          },
+          onPressed: () {},
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(onReleasedColor),
             overlayColor: MaterialStateProperty.all<Color>(onPressedColor),
