@@ -12,7 +12,6 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('VerbaLex'),
-      backgroundColor: Theme.of(context).backgroundColor,
       titleTextStyle: const TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.w500,
@@ -50,6 +49,7 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ]
           : null,
+      automaticallyImplyLeading: false,
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:verbalex/screen/home_screen.dart';
+import 'package:verbalex/screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,10 +26,9 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primaryColor: const Color.fromARGB(255, 13, 71, 161),
           focusColor: const Color.fromARGB(255, 239, 83, 80),
-          backgroundColor: Colors.white,
           fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
