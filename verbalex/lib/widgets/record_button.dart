@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:verbalex/utils/record_voice.dart';
 
 class RecordButton extends StatefulWidget {
   const RecordButton({super.key, required this.title, this.onPressedTitle});
@@ -15,10 +18,19 @@ class _RecordButtonState extends State<RecordButton> {
   late Color onReleasedColor;
   late bool isPressed;
 
+  final recorder = Recorder();
+
   @override
   void initState() {
     super.initState();
+    recorder.initRecorder();
     isPressed = false;
+  }
+
+  @override
+  void dispose() {
+    recorder.closeRecorder();
+    super.dispose();
   }
 
   @override
@@ -36,8 +48,15 @@ class _RecordButtonState extends State<RecordButton> {
      * has released their finger from the button.
      */
     return Listener(
-      onPointerDown: (event) => setState(() => isPressed = true),
-      onPointerUp: (event) => setState(() => isPressed = false),
+      onPointerDown: (event) {
+        setState(() => isPressed = true);
+        recorder.record();
+      },
+      onPointerUp: (event) async {
+        setState(() => isPressed = false);
+        File audioFilePath = await recorder.stop();
+        recorder.playAudio(audioFilePath);
+      },
       child: TextButton(
           onPressed: () {},
           style: ButtonStyle(
