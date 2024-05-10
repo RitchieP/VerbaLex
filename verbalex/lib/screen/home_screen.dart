@@ -11,6 +11,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var textRecognized;
+  onRecordButtonReleased(data) {
+    setState(() {
+      textRecognized = data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Center(
           child: Column(
-        children: const [
-          OutputSpace(),
+        children: [
+          OutputSpace(text: textRecognized),
           RecordButton(
             title: "Record",
-            onPressedTitle: "Recording",
+            onRecordButtonReleased: onRecordButtonReleased,
           )
         ],
       )),
