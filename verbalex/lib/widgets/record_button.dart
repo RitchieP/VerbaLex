@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:retry/retry.dart';
 import 'package:verbalex/utils/record_voice.dart';
 
 class RecordButton extends StatefulWidget {
-  const RecordButton({super.key, required this.title, required this.onRecordButtonReleased});
+  const RecordButton(
+      {super.key, required this.title, required this.onRecordButtonReleased});
 
   final String title;
   final Function onRecordButtonReleased;
@@ -41,6 +43,7 @@ class _RecordButtonState extends State<RecordButton> {
 
   @override
   Widget build(BuildContext context) {
+    const r = RetryOptions(maxAttempts: 5, delayFactor: Duration(seconds: 2));
     const snackBar = SnackBar(content: Text('Processing recording'));
     /**
      * Listener to record voice when the button is pressed.
@@ -55,9 +58,22 @@ class _RecordButtonState extends State<RecordButton> {
       onPointerUp: (event) async {
         setState(() => isPressed = false);
         final audioFile = await recorder.stop();
-        final response = await recorder.sendAudio(audioFile);
-        widget.onRecordButtonReleased(response.text);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        try {
+          print('Sending audio to server...');
+          // final response = await (() => recorder.sendAudio(audioFile)).withRetries(5);
+          final response = await r.retry(
+            () => recorder.sendAudio(audioFile),
+            onRetry: (p0) => print('Retrying...'),
+          );
+          widget.onRecordButtonReleased(response.text);
+          if (context.mounted)
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                 SnackBar(content: Text(e.toString())));
+          }
+        }
       },
       child: TextButton(
           onPressed: () {},

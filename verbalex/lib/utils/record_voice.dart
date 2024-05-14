@@ -55,10 +55,13 @@ class Recorder {
 
   /// Method to send audio to the server for inferencing.
   Future<Audio> sendAudio(File path) async {
+
+    // Check if the file exists
     if (!path.existsSync()) {
       throw Exception('File does not exist');
     }
     
+    // Read the file as bytes and send it to the server
     final data = path.readAsBytesSync();
     final response = await http.post(
       Uri.parse(API_URL),
@@ -69,11 +72,12 @@ class Recorder {
       body: data,
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return Audio.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {
       throw Exception(
-          '${response.statusCode} Server failed to process audio file or returne');
+          '${response.statusCode} Server failed to process audio file or return');
     }
   }
+
 }
