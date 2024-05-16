@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:verbalex/screen/home_screen.dart';
+import 'package:verbalex/screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +13,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Set the app orientation to portrait only.
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       title: 'VerbaLex',
       theme: ThemeData(
@@ -26,10 +32,9 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primaryColor: const Color.fromARGB(255, 13, 71, 161),
           focusColor: const Color.fromARGB(255, 239, 83, 80),
-          backgroundColor: Colors.white,
           fontFamily: GoogleFonts.lato().fontFamily,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
