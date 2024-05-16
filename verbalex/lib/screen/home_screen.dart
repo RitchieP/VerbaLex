@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  onDataReturned(data) {
+  onDataReturned(String? data) {
     setState(() {
       textRecognized = data;
       isLoading = false;

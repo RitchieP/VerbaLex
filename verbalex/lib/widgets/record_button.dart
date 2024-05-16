@@ -79,6 +79,10 @@ class _RecordButtonState extends State<RecordButton> {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(e.toString())));
           }
+
+          // If the request fails, we will return null to the output space.
+          // Which later will be handled by the output space widget.
+          widget.onDataReturned(null);
           if (kDebugMode) print(e.toString());
         }
       },
