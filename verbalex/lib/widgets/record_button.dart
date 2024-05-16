@@ -1,14 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:retry/retry.dart';
 import 'package:verbalex/utils/record_voice.dart';
 
 class RecordButton extends StatefulWidget {
   const RecordButton(
-      {super.key, required this.title, required this.onRecordButtonReleased});
+      {super.key,
+      required this.title,
+      required this.onDataReturned,
+      required this.onLoading});
 
   final String title;
-  final Function onRecordButtonReleased;
+  final Function onDataReturned;
   final String onPressedTitle = "Recording";
+  final Function onLoading;
 
   @override
   State<RecordButton> createState() => _RecordButtonState();
@@ -44,7 +49,6 @@ class _RecordButtonState extends State<RecordButton> {
   @override
   Widget build(BuildContext context) {
     const r = RetryOptions(maxAttempts: 5, delayFactor: Duration(seconds: 2));
-    const snackBar = SnackBar(content: Text('Processing recording'));
     /**
      * Listener to record voice when the button is pressed.
      * The button will return to its initial state after the user
@@ -58,21 +62,28 @@ class _RecordButtonState extends State<RecordButton> {
       onPointerUp: (event) async {
         setState(() => isPressed = false);
         final audioFile = await recorder.stop();
+        widget.onLoading("Processing...");
         try {
-          print('Sending audio to server...');
+          if (kDebugMode) print('Sending audio to server...');
           // final response = await (() => recorder.sendAudio(audioFile)).withRetries(5);
           final response = await r.retry(
-            () => recorder.sendAudio(audioFile),
-            onRetry: (p0) => print('Retrying...'),
+            () {
+              widget.onLoading("Transcribing...");
+              return recorder.sendAudio(audioFile);
+            },
+            onRetry: (p0) => widget.onLoading("Loading model..."),
           );
-          widget.onRecordButtonReleased(response.text);
-          if (context.mounted)
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          widget.onDataReturned(response.text);
         } catch (e) {
           if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text(e.toString())));
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(e.toString())));
           }
+
+          // If the request fails, we will return null to the output space.
+          // Which later will be handled by the output space widget.
+          widget.onDataReturned(null);
+          if (kDebugMode) print(e.toString());
         }
       },
       child: TextButton(
