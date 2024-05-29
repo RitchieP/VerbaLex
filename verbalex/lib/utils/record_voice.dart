@@ -8,14 +8,19 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:verbalex/utils/accents.dart';
 import 'package:verbalex/utils/audio.dart';
 
 class Recorder {
   final recorder = AudioRecorder();
   final player = AudioPlayer();
 
-  final API_URL =
-      "https://api-inference.huggingface.co/models/RitchieP/verbalex-ar";
+  Future<String> getAPI() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _accent = prefs.getString('accent') ?? "Arabic";
+    return "https://api-inference.huggingface.co/models/RitchieP/verbalex-${ACCENT_TO_API[_accent]}";
+  }
 
   Future initRecorder() async {
     final status = await Permission.microphone.request();
@@ -55,16 +60,16 @@ class Recorder {
 
   /// Method to send audio to the server for inferencing.
   Future<Audio> sendAudio(File path) async {
-
+    Uri url = Uri.parse(await getAPI());
     // Check if the file exists
     if (!path.existsSync()) {
       throw Exception('File does not exist');
     }
-    
+
     // Read the file as bytes and send it to the server
     final data = path.readAsBytesSync();
     final response = await http.post(
-      Uri.parse(API_URL),
+      url,
       headers: {
         HttpHeaders.authorizationHeader:
             "Bearer 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",
@@ -79,5 +84,4 @@ class Recorder {
           '${response.statusCode} Server failed to process audio file or return');
     }
   }
-
 }
