@@ -13,3 +13,9 @@ final Map<String, String> ACCENT_CODES = {
   "Chinese": "CN",
   "Hindi": "IN",
 };
+
+final Map<String, String> ACCENT_TO_API = {
+  "Arabic": "ar",
+  "Chinese": "zh",
+  "Hindi": "hi",
+};
