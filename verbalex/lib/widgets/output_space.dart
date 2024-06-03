@@ -16,35 +16,28 @@ class _OutputSpaceState extends State<OutputSpace> {
     if (kDebugMode) print(widget.text);
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: TextField(
-        style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.italic,
-            color: Color.fromARGB(255, 58, 80, 107)),
-
-        /**
-         * The text field was not meant to be edited by the user, 
-         * it will only show text
-         */
-        readOnly: true,
-        decoration: InputDecoration(
-          fillColor: const Color.fromARGB(255, 231, 234, 239),
-          filled: true,
-          hintText: widget.text ?? "Press the record button to start recording",
-          // Remove all the borders around the text field.
-          border: InputBorder.none,
-          /**
-           * The contentPadding is more for the bottom padding because we want
-           * to set the size of the text field to span almost the entire screen.
-           */
-          contentPadding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.01,
-              MediaQuery.of(context).size.height * 0.01,
-              MediaQuery.of(context).size.width * 0.01,
-              MediaQuery.of(context).size.height * 0.6),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 231, 234, 239),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-      ),
+        padding: const EdgeInsets.all(15),
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.62,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Text(
+            widget.text ?? "Press the record button to start recording.",
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+              color: Color.fromARGB(255, 58, 80, 107)
+            ),
+            textAlign: TextAlign.justify,
+          ),
+        ),
+      )
     );
   }
 }
