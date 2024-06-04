@@ -17,9 +17,9 @@ class _OutputSpaceState extends State<OutputSpace> {
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 231, 234, 239),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         padding: const EdgeInsets.all(15),
         width: double.infinity,
@@ -28,12 +28,7 @@ class _OutputSpaceState extends State<OutputSpace> {
           scrollDirection: Axis.vertical,
           child: Text(
             widget.text ?? "Press the record button to start recording.",
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.italic,
-              color: Color.fromARGB(255, 58, 80, 107)
-            ),
+            style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.justify,
           ),
         ),

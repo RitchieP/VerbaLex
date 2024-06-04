@@ -12,11 +12,7 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('VerbaLex'),
-      titleTextStyle: const TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-        fontSize: 32,
-      ),
+      // titleTextStyle: Theme.of(context).textTheme.titleLarge,
       centerTitle: true,
       elevation: 0,
       leading: screen == "settings"
@@ -26,7 +22,6 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
               },
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
                 size: 30,
               ),
             )
@@ -43,7 +38,6 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 icon: const Icon(
                   Icons.settings_outlined,
-                  color: Colors.black,
                   size: 30,
                 ),
               ),

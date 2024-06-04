@@ -20,16 +20,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(
           children: [
-            listTileTitle("Preferences"),
+            listTileTitle("Preferences", context),
             listTileOptions(
               "Dark Mode", 
               "By switching this, the screen will become white on black.", 
-              true
+              true,
+              context
             ),
             listTileOptions(
               "Accent choice", 
               "Switch it to have the intelligent model best fit for you.", 
               false,
+              context,
               onPressedFunction: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const AccentSelection(),
@@ -37,16 +39,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               )
             ),
             const SizedBox(height: 20,),
-            listTileTitle("Help"),
+            listTileTitle("Help", context),
             listTileOptions(
               "Report a problem", 
               "Encountering something odd? Let us know!", 
-              false
+              false,
+              context
             ),
             listTileOptions(
               "Privacy and Security",
               "Concerned about your privacy? Check this!", 
-              false
+              false,
+              context
             )
           ],
         ),
