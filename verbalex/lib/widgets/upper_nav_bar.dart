@@ -15,7 +15,7 @@ class UpperNavBar extends StatelessWidget implements PreferredSizeWidget {
       // titleTextStyle: Theme.of(context).textTheme.titleLarge,
       centerTitle: true,
       elevation: 0,
-      leading: screen == "settings" || screen == "help"
+      leading: screen == "settings" || screen == "help" || screen == "pnc"
           ? IconButton(
               onPressed: () {
                 Navigator.of(context).pop();

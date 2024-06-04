@@ -5,6 +5,7 @@ import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:verbalex/screen/pnc_screen.dart';
 import 'package:verbalex/widgets/list_tile_styles.dart';
 import 'package:verbalex/widgets/upper_nav_bar.dart';
 
@@ -61,7 +62,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         await FlutterEmailSender.send(email);
                       })),
               listTileOptions("Privacy and Security",
-                  "Concerned about your privacy? Check this!", false, context)
+                  "Concerned about your privacy? Check this!", false, context,
+                  onPressedFunction: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PnCScreen(),
+                        ),
+                      )
+              ),
             ],
           ),
         ));
