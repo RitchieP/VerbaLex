@@ -47,6 +47,8 @@ dependencies:
   http: ^1.2.1
   retry: ^3.1.2
   modal_progress_hud_nsn: ^0.5.1
+  feedback: ^3.1.0
+  flutter_email_sender: ^6.0.3
 
 dev_dependencies:
   flutter_test:

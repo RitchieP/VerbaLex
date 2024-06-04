@@ -1,3 +1,4 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,24 +19,17 @@ final ThemeData lightTheme = ThemeData(
         color: Colors.black,
       ),
       titleMedium: TextStyle(
-        decoration: TextDecoration.underline,
-        fontWeight: FontWeight.w700,
-        fontSize: 20,
-        color: Colors.transparent,
-        decorationColor: Colors.black,
-        // This shadow configuration is to configure the amount of spacing 
-        // between the underline and the text.
-        shadows: [Shadow(color: Colors.black, offset: Offset(0, -5))]
-      ),
+          decoration: TextDecoration.underline,
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          color: Colors.transparent,
+          decorationColor: Colors.black,
+          // This shadow configuration is to configure the amount of spacing
+          // between the underline and the text.
+          shadows: [Shadow(color: Colors.black, offset: Offset(0, -5))]),
       titleSmall: TextStyle(
-        fontWeight: FontWeight.w600, 
-        fontSize: 20, 
-        color: Colors.black
-      ),
-      displaySmall: TextStyle(
-        color: Colors.black,
-        fontSize: 16
-      ),
+          fontWeight: FontWeight.w600, fontSize: 20, color: Colors.black),
+      displaySmall: TextStyle(color: Colors.black, fontSize: 16),
       bodySmall: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w400,
@@ -54,35 +48,34 @@ final ThemeData darkTheme = ThemeData(
     iconColor: MaterialStateProperty.all<Color>(Colors.white),
   )),
   textTheme: const TextTheme(
-      titleLarge: TextStyle(
-        fontSize: 32,
-        fontWeight: FontWeight.w600,
-        color: Colors.white,
-      ),
-      titleMedium: TextStyle(
+    titleLarge: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    ),
+    titleMedium: TextStyle(
         decoration: TextDecoration.underline,
         fontWeight: FontWeight.w700,
         fontSize: 20,
         color: Colors.transparent,
         decorationColor: Colors.white,
-        // This shadow configuration is to configure the amount of spacing 
+        // This shadow configuration is to configure the amount of spacing
         // between the underline and the text.
-        shadows: [Shadow(color: Colors.white, offset: Offset(0, -5))]
-      ),
-      titleSmall: TextStyle(
-        fontWeight: FontWeight.w600, 
-        fontSize: 20, 
-        color: Colors.white
-      ),
-      displaySmall: TextStyle(
-        color: Colors.white,
-        fontSize: 16
-      ),
-      bodySmall: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          fontStyle: FontStyle.italic,
-          color: Color.fromARGB(255, 255, 255, 255)
-      ),
+        shadows: [Shadow(color: Colors.white, offset: Offset(0, -5))]),
+    titleSmall: TextStyle(
+        fontWeight: FontWeight.w600, fontSize: 20, color: Colors.white),
+    displaySmall: TextStyle(color: Colors.white, fontSize: 16),
+    bodySmall: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        fontStyle: FontStyle.italic,
+        color: Color.fromARGB(255, 255, 255, 255)),
   ),
+);
+
+final FeedbackThemeData feedbackTheme = FeedbackThemeData(
+  bottomSheetDescriptionStyle: const TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+  )
 );

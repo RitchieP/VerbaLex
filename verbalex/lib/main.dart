@@ -1,10 +1,14 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:verbalex/screen/splash_screen.dart';
 import 'package:verbalex/utils/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(BetterFeedback(
+    theme: feedbackTheme,
+    child: const MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ThemeMode themeMode = ThemeMode.light;
     // Set the app orientation to portrait only.
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'VerbaLex',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       home: const SplashScreen(),
     );
   }
