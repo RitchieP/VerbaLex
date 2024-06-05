@@ -65,6 +65,7 @@ class _RecordButtonState extends State<RecordButton> {
         widget.onLoading("Processing...");
         try {
           if (kDebugMode) print('Sending audio to server...');
+          // final response = await (() => recorder.sendAudio(audioFile)).withRetries(5);
           final response = await r.retry(
             () {
               widget.onLoading("Transcribing...");

@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:verbalex/main.dart';
 /// This function builds the big section divider in the settings screen.
 /// It takes in a [title] parameter to define the section title.
-Widget listTileTitle(String title) {
+Widget listTileTitle(String title, BuildContext context) {
   return ListTile(
     title: Text(title,
         textAlign: TextAlign.center,
-        style: const TextStyle(
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
-            color: Colors.transparent,
-            decorationColor: Colors.black,
-            // This shadow configuration is to configure the amount of spacing 
-            // between the underline and the text.
-            shadows: [Shadow(color: Colors.black, offset: Offset(0, -5))])),
+        style: Theme.of(context).textTheme.titleMedium,
+    ),
   );
 }
 
@@ -28,26 +22,30 @@ Widget listTileTitle(String title) {
 /// [isSwitch] is a boolean that determines if the setting's tile have a switch button or not.
 /// 
 /// [onPressedFunction] is a function that will be executed when the tile is pressed.
-Widget listTileOptions(String title, String subtitle, bool isSwitch, {VoidCallback? onPressedFunction}) {
+Widget listTileOptions(String title, String subtitle, bool isSwitch, BuildContext context,  {VoidCallback? onPressedFunction}) {
+  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
   return ListTile(
       title: Text(
         title,
-        style: const TextStyle(
-            fontWeight: FontWeight.w600, fontSize: 20, color: Colors.black),
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: Colors.black),
+        style: Theme.of(context).textTheme.displaySmall,
       ),
       trailing: isSwitch
-          ? Switch(value: false, onChanged: (bool value) {})
+          ? Switch(
+            value: isDarkMode, 
+            onChanged: (bool isDark) {
+              Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+            })
           : IconButton(
               // If there's a provided onPressed function, the button will execute
               // it. Otherwise, it will do nothing.
               onPressed: onPressedFunction ?? () {},
               icon: const Icon(
                 Icons.arrow_forward_ios,
-                color: Colors.black,
               ),
             ));
 }
