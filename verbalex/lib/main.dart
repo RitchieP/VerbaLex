@@ -2,6 +2,7 @@ import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:verbalex/screen/splash_screen.dart';
 import 'package:verbalex/utils/theme.dart';
 
@@ -13,13 +14,31 @@ void main() {
 }
 
 class ThemeNotifier with ChangeNotifier {
-  bool _isDarkMode = false;
+  bool _isDarkMode;
+
+  ThemeNotifier() : _isDarkMode = false {
+    loadFromPrefs();
+  }
 
   ThemeMode get currentTheme => _isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
+    saveToPrefs();
     notifyListeners();
+  }
+
+  loadFromPrefs() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+      notifyListeners();
+    });
+  }
+
+  saveToPrefs() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool('isDarkMode', _isDarkMode);
+    });
   }
 }
 
