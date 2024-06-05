@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:verbalex/main.dart';
 /// This function builds the big section divider in the settings screen.
 /// It takes in a [title] parameter to define the section title.
 Widget listTileTitle(String title, BuildContext context) {
@@ -22,6 +23,8 @@ Widget listTileTitle(String title, BuildContext context) {
 /// 
 /// [onPressedFunction] is a function that will be executed when the tile is pressed.
 Widget listTileOptions(String title, String subtitle, bool isSwitch, BuildContext context,  {VoidCallback? onPressedFunction}) {
+  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
   return ListTile(
       title: Text(
         title,
@@ -32,7 +35,11 @@ Widget listTileOptions(String title, String subtitle, bool isSwitch, BuildContex
         style: Theme.of(context).textTheme.displaySmall,
       ),
       trailing: isSwitch
-          ? Switch(value: false, onChanged: (bool value) {})
+          ? Switch(
+            value: isDarkMode, 
+            onChanged: (bool isDark) {
+              Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+            })
           : IconButton(
               // If there's a provided onPressed function, the button will execute
               // it. Otherwise, it will do nothing.
